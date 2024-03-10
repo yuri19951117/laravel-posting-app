@@ -20,6 +20,7 @@ class PostFactory extends Factory
             'user_id' => '4',
             'title' => fake()->realtext(20,2),
             'content' => fake()->realtext(50,2),
+            'created_at' => fake()->dateTime(),
             ];
     }
 }
