@@ -13,7 +13,7 @@ class PostController extends Controller
      // 一覧ページ
     public function index()
 {
-    $posts = Auth::user()->posts()->orderBy('created_at', 'asc')->get();
+    $posts = Auth::user()->posts()->orderBy('updated_at', 'asc')->get();
     return view('posts.index', compact('posts'));
     }
     // 詳細ページ
@@ -58,6 +58,11 @@ return redirect()->route('posts.index')->with('flash_message', '投稿が完了�
     if ($post->user_id !== Auth::id()) {
     return redirect()->route('posts.index')->with('error_message', '不正なアクセスです。');
  }
+ //バリデーションを設定
+    $request->validate([
+    'title' => 'required|max:40',
+    'content' => 'required|max:200'
+]);
     $post->title = $request->input('title');
     $post->content = $request->input('content');
     $post->save();
